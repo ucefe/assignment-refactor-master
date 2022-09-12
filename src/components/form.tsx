@@ -1,70 +1,89 @@
 import * as React from "react";
+import { useState } from "react";
 import { Button } from "./button";
 import styles from "./form.module.css";
 
-type IFormProps = {
-  "handleSubmit":any
-  // "handleSubmit": (payload: { title: string; description: string; price: string }) => void;
-}
+type AddProductProps = {
+  //TODO import product Interface
+  handleSubmit: (payload: {
+    title: string;
+    description: string;
+    price: number;
+  }) => void;
+};
 
-export const Form: React.FC<IFormProps> = (props) => {
-  let formRef = React.useRef<HTMLFormElement>(null);
-  let titleRef = React.useRef<HTMLInputElement>(null);
-  let priceRef = React.useRef<HTMLInputElement>(null);
-  let descriptionRef = React.useRef<HTMLTextAreaElement>(null);
+const INITIAL_VALUES = {
+  title: "",
+  description: "",
+  price: null,
+};
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+const AddProduct: React.FC<AddProductProps> = ({ handleSubmit }) => {
+  const [values, setValues] = useState<any>(INITIAL_VALUES);
 
-    if (!titleRef.current?.value) {
+  const handleChange = (event: any) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setValues((prev: any) => ({ ...prev, [name]: value }));
+  };
+
+  const onSubmit = (event: any) => {
+    event.preventDefault();
+
+    if (!values.title) {
       alert("Your product needs a title");
-
       return;
     }
 
-    if (!descriptionRef.current?.value || !priceRef.current?.value) {
+    if (!values.description) {
       alert("Your product needs some content");
-
       return;
     }
 
-    props["handleSubmit"]({
-      title: titleRef.current && titleRef.current.value,
-      description: descriptionRef.current && descriptionRef.current.value,
-      price: priceRef.current && priceRef.current.value,
-    });
+    if (!values.price || isNaN(Number(values.price))) {
+      alert("Your product needs a valid price");
+      return;
+    }
 
-    formRef.current?.reset();
+    handleSubmit(values);
+    setValues(INITIAL_VALUES);
   };
 
   return (
-    <form className={styles.form} onSubmit={(event) => handleSubmit(event)} ref={formRef}>
-      <span className={styles.label}>Product title: *</span>
-
+    <form className={styles.form} onSubmit={(event) => onSubmit(event)}>
+      <label className={styles.label}>Product title: *</label>
       <input
-        ref={titleRef}
+        id="title"
+        name="title"
         placeholder="Title..."
         defaultValue=""
         className={styles.input}
+        onChange={(e) => handleChange(e)}
+        required
       />
-
-      <span className={styles.label}>Product details: *</span>
-
+      <label className={styles.label}>Product details: *</label>
       <input
-        ref={priceRef}
+        id="price"
+        name="price"
         placeholder="Price..."
         defaultValue=""
         className={styles.input}
+        onChange={(e) => handleChange(e)}
+        required
       />
 
       <textarea
-        ref={descriptionRef}
+        id="description"
+        name="description"
         placeholder="Start typing product description here..."
         defaultValue=""
         className={styles.textarea}
+        onChange={(e) => handleChange(e)}
+        required
       />
 
       <Button>Add a product</Button>
     </form>
   );
 };
+export default AddProduct;

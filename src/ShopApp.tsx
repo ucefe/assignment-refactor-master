@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { FaTimes } from "react-icons/fa";
 import { Button } from "./components/button";
 import ProductList from "./components/product-list-components";
-import { Form } from "./components/form";
+import  AddProduct from "./components/form";
 import logo from "./images/droppe-logo.png";
 import img1 from "./images/img1.png";
 import img2 from "./images/img2.png";
@@ -172,7 +172,7 @@ const ShopApp: React.FC = () => {
           <div className={styles.modalClose} onClick={() => setIsOpen(false)}>
             <FaTimes />
           </div>
-          <Form handleSubmit={onSubmit} />
+          <AddProduct handleSubmit={onSubmit} />
         </div>
       </Modal>
     </>
