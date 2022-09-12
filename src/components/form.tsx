@@ -3,7 +3,8 @@ import { Button } from "./button";
 import styles from "./form.module.css";
 
 type IFormProps = {
-  "on-submit": (payload: { title: string; description: string; price: string }) => void;
+  "handleSubmit":any
+  // "handleSubmit": (payload: { title: string; description: string; price: string }) => void;
 }
 
 export const Form: React.FC<IFormProps> = (props) => {
@@ -27,7 +28,7 @@ export const Form: React.FC<IFormProps> = (props) => {
       return;
     }
 
-    props["on-submit"]({
+    props["handleSubmit"]({
       title: titleRef.current && titleRef.current.value,
       description: descriptionRef.current && descriptionRef.current.value,
       price: priceRef.current && priceRef.current.value,

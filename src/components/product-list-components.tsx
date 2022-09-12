@@ -5,7 +5,8 @@ import styles from "./product-list-components.module.css";
 
 interface IPostsProps {
   products: any;
-  onFav: (title: string) => void;
+  //just to make shopApp refactor working will be removed on this file refactoring
+  onFav: (title: any) => void;
 }
 
 
