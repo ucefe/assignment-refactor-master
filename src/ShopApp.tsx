@@ -157,7 +157,7 @@ const ShopApp: React.FC = () => {
         </div>
 
         {products && !!products.length ? (
-          <ProductList products={products} onFav={toggleFavorite} />
+          <ProductList products={products} toggleFavorite={toggleFavorite} />
         ) : (
           <div></div>
         )}

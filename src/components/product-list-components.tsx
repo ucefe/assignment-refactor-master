@@ -1,25 +1,26 @@
 import * as React from "react";
-import lodash from 'lodash'
-import { FaStar } from "react-icons/fa";
-import styles from "./product-list-components.module.css";
+import _ from "lodash";
 import Product from "./Product";
+import { IProduct } from "../product.interface";
 
-interface IPostsProps {
-  products: any;
-  //just to make shopApp refactor working will be removed on this file refactoring
-  onFav: (title: any) => void;
-}
+type ProductListProps = {
+  products: IProduct[];
+  toggleFavorite: (id: number) => void;
+};
 
+const ProductList: React.FC<ProductListProps> = ({
+  products,
+  toggleFavorite,
+}) => {
+  const productList = products.map((product) => (
+    <Product
+      key={product.id}
+      product={product}
+      toggleFavorite={toggleFavorite}
+    />
+  ));
 
-export default class Posts extends React.Component<IPostsProps, {}> {
-  constructor(props: any) { super(props) }
-  render(){
-    let productsarr = []
-      for (const [i, p] of this.props.products.entries()) {
-        productsarr.push(
-          <Product key={i} index={i} product={p} onFav={this.props.onFav} />
-        );
-    }
-    return <div>{lodash.reverse(productsarr)}</div>
-  }
-}
+  return <div>{_.reverse(productList)}</div>;
+};
+
+export default ProductList;
