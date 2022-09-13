@@ -6,8 +6,9 @@ import ProductList from "./components/product-list-components";
 import AddProduct from "./components/form";
 import styles from "./assets/css/styles.module.css";
 import Header from "./components/Header";
-import { IProduct } from "./product.interface";
+import { IProduct } from "./interfaces/product.interface";
 import Hero from "./components/Hero";
+import { addProduct, getAllProducts } from "./services/ProductService";
 
 const ShopApp: React.FC = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -21,17 +22,16 @@ const ShopApp: React.FC = () => {
     setMessage("Loading...");
     setIsShowingMessage(true);
 
-    //TODO define it inside Service
-    const fetchProducts = async () => {
-      const response = await fetch("https://fakestoreapi.com/products");
-      const json = await response.json();
-      setProducts(json);
-      setProdCount(json.length);
-      setMessage("");
-      setIsShowingMessage(false);
-    };
-
-    fetchProducts().catch(console.error);
+    getAllProducts()
+      .then((allProducts) => {
+        setProducts(allProducts);
+        setProdCount(allProducts.length);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setMessage("");
+        setIsShowingMessage(false);
+      });
     document.title = "Droppe refactor app";
   }, []);
 
@@ -51,7 +51,6 @@ const ShopApp: React.FC = () => {
     setProducts(newProducts);
   };
 
-  //TODO define it inside Service
   const postProduct = async (
     title: string,
     description: string,
@@ -60,22 +59,8 @@ const ShopApp: React.FC = () => {
     setIsOpen(false);
     setMessage("Adding product...");
     setIsShowingMessage(true);
-
-    const response = await fetch("https://fakestoreapi.com/products", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title,
-        price,
-        description,
-      }),
-    });
-    const json = await response.json();
-
-    setProducts((prev) => [...prev, { ...json }]);
+    const newProduct = await addProduct(title,description,price);
+    setProducts((prev) => [...prev, { ...newProduct }]);
     setProdCount((prev) => prev + 1);
     setMessage("");
     setIsShowingMessage(false);

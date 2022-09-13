@@ -1,7 +1,7 @@
 import * as React from "react";
 import _ from "lodash";
 import Product from "./Product";
-import { IProduct } from "../product.interface";
+import { IProduct } from "../interfaces/product.interface";
 
 type ProductListProps = {
   products: IProduct[];

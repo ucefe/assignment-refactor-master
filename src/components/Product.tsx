@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "./product-list-components.module.css";
 import { FaStar } from 'react-icons/fa';
-import { IProduct } from '../product.interface';
+import { IProduct } from '../interfaces/product.interface';
 
 type ProductProps = {
 	product: IProduct;
