@@ -1,0 +1,11 @@
+.main {
+	padding: 32px 0;
+	margin: 50px inherit;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.image {
+	max-height: 15em;
+	display: block;
+}

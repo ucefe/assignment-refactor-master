@@ -3,27 +3,11 @@ import Modal from "react-modal";
 import { FaTimes } from "react-icons/fa";
 import { Button } from "./components/button";
 import ProductList from "./components/product-list-components";
-import  AddProduct from "./components/form";
-import logo from "./images/droppe-logo.png";
-import img1 from "./images/img1.png";
-import img2 from "./images/img2.png";
-import styles from "./shopApp.module.css";
-
-//TODO define inside interface file
-type Rating = {
-  rate: number;
-  count: number;
-};
-
-interface IProduct {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  image: string;
-  rating: Rating;
-  isFavorite: boolean;
-}
+import AddProduct from "./components/form";
+import styles from "./assets/css/styles.module.css";
+import Header from "./components/Header";
+import { IProduct } from "./product.interface";
+import Hero from "./components/Hero";
 
 const ShopApp: React.FC = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -74,8 +58,8 @@ const ShopApp: React.FC = () => {
     price: number
   ) => {
     setIsOpen(false);
-		setMessage('Adding product...');
-		setIsShowingMessage(true);
+    setMessage("Adding product...");
+    setIsShowingMessage(true);
 
     const response = await fetch("https://fakestoreapi.com/products", {
       method: "POST",
@@ -107,32 +91,12 @@ const ShopApp: React.FC = () => {
 
   return (
     <>
-      <div className={styles.header}>
-        <div className={["container", styles.headerImageWrapper].join(" ")}>
-          <img src={logo} className={styles.headerImage} alt="..." />
-        </div>
-      </div>
+      {/* Header Section */}
+      <Header />
+      {/* Hero Section */}
+      <Hero />
 
-      <span
-        className={["container", styles.main].join(" ")}
-        style={{
-          margin: "50px inherit",
-          display: "flex",
-          justifyContent: "space-evenly",
-        }}
-      >
-        <img
-          src={img1}
-          style={{ maxHeight: "15em", display: "block" }}
-          alt="..."
-        />
-        <img
-          src={img2}
-          style={{ maxHeight: "15rem", display: "block" }}
-          alt="..."
-        />
-      </span>
-
+      {/* Products List */}
       <div
         className={["container", styles.main].join(" ")}
         style={{ paddingTop: 0 }}
