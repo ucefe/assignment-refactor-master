@@ -1,9 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
-import { Button } from "./button";
-import styles from "./form.module.css";
+import { Button } from "../UI";
+import styles from "./styles.module.css";
 
 type AddProductProps = {
+  
   //TODO import product Interface
   handleSubmit: (payload: {
     title: string;

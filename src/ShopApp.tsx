@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { FaTimes } from "react-icons/fa";
-import { Button } from "./components/button";
-import ProductList from "./components/product-list-components";
-import AddProduct from "./components/form";
+
 import styles from "./assets/css/styles.module.css";
-import Header from "./components/Header";
+
 import { IProduct } from "./interfaces/product.interface";
-import Hero from "./components/Hero";
 import { addProduct, getAllProducts } from "./services/ProductService";
+
+import { Button, Header, Hero } from "./components/UI";
+import { AddProduct, ProductList } from "./components";
 
 const ShopApp: React.FC = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
